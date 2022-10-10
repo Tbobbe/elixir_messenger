@@ -1,0 +1,20 @@
+
+<%= if @current_user do %>
+  <div class="nav-button"> 
+    <%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %>
+  </div>
+  <div class="nav-button">
+    <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+  </div>
+  <div class="float-right text-center h-[6rem] py-[2rem] w-[15rem] flex-grow text-xl">
+    <%= @current_user.username %>
+  </div>
+<% else %>
+  <div class="nav-button">
+    <%= link "Register", to: Routes.user_registration_path(@conn, :new) %>
+  </div>
+  <div class="nav-button">
+    <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
+  </div>
+<% end %>
+
