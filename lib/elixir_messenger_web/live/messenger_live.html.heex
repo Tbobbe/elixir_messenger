@@ -2,8 +2,7 @@
     <div class="h-[4rem] w-[90%] rounded-md mx-[5%] bg-gray-800 text-center py-[1rem] text-2xl text-white my-2">
         <h1>Friends List</h1>
     </div>
-    <div class="max-h-[50%] overflow-auto w-[90%] flex-grow mx-[5%] my-2 rounded-md">
-        
+    <div class="max-h-[40%] overflow-auto w-[90%] mx-[5%] my-2 rounded-md">
         <%= for friend <- @current_user.friends do %>
             <button phx-click="get_user_chat" phx-value-uname={friend.username} class="h-[5rem] w-full bg-gray-800 hover:bg-gray-500 py-[1rem] text-white hover:text-black text-center text-2xl">
                 <%= friend.username %>
@@ -16,7 +15,7 @@
     <div class="h-[4rem] w-[90%] rounded-md mx-[5%] bg-gray-600 text-center py-[1rem] text-2xl text-white my-2">
         <h1>Groups list</h1>
     </div>
-    <div class="max-h-[50%] overflow-auto w-[90%] flex-grow mx-[5%] my-2 rounded-md">    
+    <div class="max-h-[40%] overflow-auto w-[90%] mx-[5%] my-2 rounded-md">    
         <%= for group <- @current_user.groups do %>
             <button phx-click="get_group_chat" phx-value-group_id={group.id} class="h-[5rem] w-full bg-gray-600 hover:bg-gray-500 py-[1rem] text-white hover:text-black text-center text-2xl">
                 <%= group.groupname %>
@@ -31,21 +30,29 @@
     <div class="text-4xl text-white h-[4rem] py-[1rem] ml-[5%]">
         <h1><%= unless(@group_active?, do:  @selected_friend, else: @selected_group.groupname) %></h1>
     </div>
-    <div class=" w-[90%] h-[90%] bg-gray-200 p-3 my-3 mx-[5%] flex-grow overflow-auto rounded-lg text-2xl">    
+    <div class=" w-[90%] h-[90%] bg-gray-200 p-3 my-3 mx-[5%] overflow-auto rounded-lg">    
         <%= for message <- @chat_content do %>
-                <%= if message.from_id == @current_user.username do %>
-                    <div class="w-[100%] min-h-[3.5rem] flex-grow mt-3"> 
-                        <div class = "max-w-[60%] float-right mr-4 bg-green-500 rounded-xl p-3">
-                            <%= message.message %>
+                <div class="w-[100%] overflow-hidden">
+                    <%= if message.from_id == @current_user.username do %>
+                        <div class="max-w-[60%] float-right">
+                            <div class="text-xl p-3 opacity-50">
+                                <%= message.from_id %>
+                            </div>
+                            <div class = "mr-2 bg-green-500 rounded-xl p-3 text-2xl">
+                                <%= message.message %>
+                            </div>
                         </div>
-                    </div>
-                <% else %>
-                    <div class="w-[100%] min-h-[3.5rem] flex-grow mt-3"> 
-                        <div class="max-w-[60%] float-left ml-4 bg-blue-500 rounded-xl p-3">
-                            <%= message.message %>
+                    <% else %>
+                        <div class="max-w-[60%] float-left">
+                            <div class="text-xl p-3 opacity-50">
+                                <%= message.from_id %>
+                            </div> 
+                            <div class="ml-2 bg-blue-500 rounded-xl p-3 text-2xl">
+                                <%= message.message %>
+                            </div>
                         </div>        
-                    </div>
-                <% end %>
+                    <% end %>
+                </div>
         <% end %>
     </div>
     <div class="ml-[5%]">
@@ -99,6 +106,7 @@
         <.form let={f} for={@friend} phx-submit="add_friend">
             <%= text_input f, :username1_id %>
             <%= error_tag f, :username1_id %>
+            <%= error_tag f, :username2_id %>
 
             <%= submit "Add Friend" %>
         </.form>

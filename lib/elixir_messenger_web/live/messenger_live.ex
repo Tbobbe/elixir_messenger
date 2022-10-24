@@ -25,7 +25,6 @@ defmodule ElixirMessengerWeb.MessengerLive do
 
   def handle_event("get_group_chat", %{"group_id" => group_id}, socket) do # same comment as above
     group = Messenger.get_group!(group_id)
-    IO.inspect(group_id)
     updated_socket = socket
       |> assign(:selected_group, group)
       |> assign(:chat_content, group.messages)
