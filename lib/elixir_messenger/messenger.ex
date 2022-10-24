@@ -326,13 +326,15 @@ defmodule ElixirMessenger.Messenger do
   def create_friend(attrs \\ %{})
 
   # Obs!, if atoms are used as keys insted of strings, this won't match and only one way relationship will be added
-  def create_friend(%{"username1_id" => u1, "username2_id" => u2}) do
+  def create_friend(%{"username1_id" => u1, "username2_id" => u2} = attrs) do
 
     # Insert two times so that it is a two way relationship
-    %Friend{username1_id: u1, username2_id: u2}
+    %Friend{}
+    |> Friend.changeset(attrs)
     |> Repo.insert()
 
-    %Friend{username1_id: u2, username2_id: u1}
+    %Friend{}
+    |> Friend.changeset(%{"username1_id" => u2, "username2_id" => u1})
     |> Repo.insert()
 
   end
