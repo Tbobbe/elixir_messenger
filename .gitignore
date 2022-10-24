@@ -38,3 +38,6 @@ setup_and_run*
 # TODO
 TODO.md
 
+# Protect secrets
+/config/*secret.exs
+

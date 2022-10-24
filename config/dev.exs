@@ -1,15 +1,5 @@
 import Config
 
-# Configure your database
-config :elixir_messenger, ElixirMessenger.Repo,
-  username: System.get_env("POSTGRESQL_USERNAME") || "postgres",
-  password: System.get_env("POSTGRESQL_PASSWORD") || "postgres",
-  hostname: System.get_env("HOST") || "localhost",
-  database: "elixir_messenger_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
-
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
